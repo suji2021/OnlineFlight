@@ -12,14 +12,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import com.flightbooking.dao.AirportDao;
+
 import com.flightbooking.model.Airport;
+import com.flightbooking.service.AirportService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AirportTest {
 
     @Mock
-    private AirportDao airportDao;
+    private AirportService airportService;
     private Airport airport;
 
     @Before
@@ -32,8 +33,8 @@ public class AirportTest {
     public void testGetAllAirports() {
 		List<Airport> expectedAirports = new ArrayList<>();
 		expectedAirports.add(airport);
-		 when(airportDao.getAllAirport()).thenReturn(expectedAirports);
-		List<Airport> actualAirports = airportDao.getAllAirport();
+		 when(airportService.getAllAirport()).thenReturn(expectedAirports);
+		List<Airport> actualAirports = airportService.getAllAirport();
 		assertNotNull(actualAirports);
 		assertEquals(expectedAirports.size(), actualAirports.size());
 		 assertEquals(expectedAirports.get(0), actualAirports.get(0));
@@ -42,8 +43,8 @@ public class AirportTest {
 	
 	@Test
 	public void testAddAirport() {
-	 when(airportDao.addAirport(airport)).thenReturn(airport);
-	Airport actualAirport =airportDao.addAirport(airport);
+	 when(airportService.addAirport(airport)).thenReturn(airport);
+	Airport actualAirport =airportService.addAirport(airport);
 	assertNotNull(actualAirport);
 	assertEquals(airport, actualAirport);
 	}

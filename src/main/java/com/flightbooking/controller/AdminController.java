@@ -14,12 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flightbooking.dao.AdminDao;
-import com.flightbooking.dao.AirportDao;
-import com.flightbooking.dao.BookingDao;
-import com.flightbooking.dao.FlightDao;
-import com.flightbooking.dao.TicketDao;
-import com.flightbooking.dao.UserDao;
 import com.flightbooking.exception.AirportNotFoundException;
 import com.flightbooking.exception.FlightNotFoundException;
 import com.flightbooking.exception.InvalidAdminException;
@@ -29,58 +23,64 @@ import com.flightbooking.model.Booking;
 import com.flightbooking.model.Flight;
 import com.flightbooking.model.Ticket;
 import com.flightbooking.model.User;
+import com.flightbooking.service.AdminService;
+import com.flightbooking.service.AirportService;
+import com.flightbooking.service.BookingService;
+import com.flightbooking.service.FlightService;
+import com.flightbooking.service.TicketService;
+import com.flightbooking.service.UserService;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 	
 	@Autowired
-	private AdminDao adminDao;
+	private AdminService adminService;
 	
 	@Autowired
-	private AirportDao airportDao;
+	private AirportService airportService;
 	
 	@Autowired
-	private BookingDao bookingDao;
+	private BookingService bookingService;
 	
 	@Autowired
-	private FlightDao flightDao;
+	private FlightService flightService;
 	
 	@Autowired
-	private TicketDao dao;
+	private TicketService ticketService;
 	
 	@Autowired
-	private UserDao userDao;
+	private UserService userService;
 	
 	//Administrator part
 	
 	@PostMapping("/adminRegistration")
 	public ResponseEntity<Admin> registerAdmin(@RequestBody Admin admin) {
-		Admin f=this.adminDao.registerAdmin(admin);
+		Admin f=this.adminService.registerAdmin(admin);
 		return new ResponseEntity<>(f, HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/loginAdmin") String loginAdmin(@RequestBody Admin admin) throws InvalidAdminException{
-		return this.adminDao.loginAdmin(admin);
+		return this.adminService.loginAdmin(admin);
 	}
 
 	//Airport
 	
 	@PostMapping("/addAirports")
 	public Airport addAirport(@RequestBody Airport airport) {
-		return this.airportDao.addAirport(airport);
+		return this.airportService.addAirport(airport);
 	}
 
 	
 		@GetMapping("/getAllAirports")
 		public List<Airport> getAllAirports() {
-			return airportDao.getAllAirport();
+			return airportService.getAllAirport();
 		}
 
 		
 		@PutMapping("/updateAirport/{airportId}")
 		public Airport updateAirport(@RequestBody Airport airport, @PathVariable long airportId) throws AirportNotFoundException {
-			return this.airportDao.updateAirport(airport, airportId);
+			return this.airportService.updateAirport(airport, airportId);
 		}
 		
 
@@ -89,55 +89,55 @@ public class AdminController {
 	
 	@PostMapping("/addFlight")
 	public ResponseEntity<Flight> addFlight(@RequestBody Flight flight) {
-		Flight ft=this.flightDao.addFlight(flight);
+		Flight ft=this.flightService.addFlight(flight);
 		return new ResponseEntity<>(ft, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/updateFlight/{fightId}")
+	@PutMapping("/updateFlight/{flightId}")
 	public Flight updateFlight(@RequestBody Flight flight, @PathVariable long flightId) throws FlightNotFoundException {
-		return this.flightDao.updateFlight(flight,flightId);
+		return this.flightService.updateFlight(flight,flightId);
 	}
 	
 	@GetMapping("/getAllFlights")
 	public List<Flight> getAllFlights() {
-		return this.flightDao.getAllFlights();
+		return this.flightService.getAllFlights();
 	}
 	
 	@GetMapping("/getFlightById/{flightId}")
 	public ResponseEntity<Flight> getFlight(@PathVariable long flightId) throws FlightNotFoundException {
-		return new ResponseEntity<>(this.flightDao.getFlightById(flightId),HttpStatus.OK);
+		return new ResponseEntity<>(this.flightService.getFlightById(flightId),HttpStatus.OK);
 	}
 	
 	
 	//user 
 	@GetMapping("/getAllUsers")
 	public List<User> getAllUsers() {
-		return this.userDao.getAllUsers();
+		return this.userService.getAllUsers();
 	}
 	
 	// booking part
 	
 			@GetMapping("/getAllBookings")
 			public List<Booking> getAllBookings(){
-				return this.bookingDao.getAllBookings();
+				return this.bookingService.getAllBookings();
 			}
 			
 	//Ticket part
 		
 		@PostMapping("/addTicket")
 		public Ticket addTicket(@RequestBody Ticket ticket) {
-			return this.dao.addTicket(ticket);
+			return this.ticketService.addTicket(ticket);
 		}
 		
 		@GetMapping("/FindAllTickets")
 		public List<Ticket> findAllTickets() {
-			return this.dao.findAllTickets();
+			return this.ticketService.findAllTickets();
 		}
 		
 		@DeleteMapping("/cancelTicket/{ticketId}")
 		public ResponseEntity<String> cancelTicket(@PathVariable int ticketId) {
-			this.dao.getTicketById(ticketId);
-			this.dao.cancelTicket(ticketId);
+			this.ticketService.getTicketById(ticketId);
+			this.ticketService.cancelTicket(ticketId);
 			return new ResponseEntity<>("Cancelled Successfully",HttpStatus.OK);
 		}
 		

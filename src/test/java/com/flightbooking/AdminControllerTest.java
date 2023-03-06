@@ -9,13 +9,14 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import com.flightbooking.dao.AdminDaoImpl;
+
 import com.flightbooking.exception.InvalidAdminException;
 import com.flightbooking.model.Admin;
 import com.flightbooking.repository.AdminRepository;
+import com.flightbooking.serviceimpl.AdminServiceImpl;
 public class AdminControllerTest {
 	@InjectMocks
-	private AdminDaoImpl adminDao;
+	private AdminServiceImpl adminService;
 	@Mock
 	private AdminRepository adminRepository;
 	@Before
@@ -29,7 +30,7 @@ public class AdminControllerTest {
 		admin.setEmailId("test@test.com");
 		admin.setPassword("password");
 		when(adminRepository.save(admin)).thenReturn(admin);
-		Admin result = adminDao.registerAdmin(admin);
+		Admin result = adminService.registerAdmin(admin);
 		assertEquals(admin, result);
 		}
 	
@@ -41,7 +42,7 @@ public class AdminControllerTest {
 		List<Admin> admins = new ArrayList<>();
 		admins.add(admin);
 		when(adminRepository.validateAdmin("test@test.com", "password")).thenReturn(admins);
-		String result = adminDao.loginAdmin(admin);
+		String result = adminService.loginAdmin(admin);
 		assertEquals("Login Successful", result);
 		}
 	
@@ -52,6 +53,6 @@ public class AdminControllerTest {
 		admin.setPassword("password");
 		List<Admin> admins = new ArrayList<>();
 		when(adminRepository.validateAdmin("test@test.com", "password")).thenReturn(admins);
-		adminDao.loginAdmin(admin);
+		adminService.loginAdmin(admin);
 		}
 }

@@ -48,12 +48,12 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(value=UserNotFoundException.class)
-	public ResponseEntity<String>  UserNotFoundException(UserNotFoundException ex) {
+	public ResponseEntity<String>  userNotFoundException(UserNotFoundException ex) {
 		return new ResponseEntity<>(message5,HttpStatus.CONFLICT);
 	}
 	
 	@ExceptionHandler(value=AirportNotFoundException.class)
-	public ResponseEntity<String>  AirportNotFoundException(AirportNotFoundException ex) {
+	public ResponseEntity<String> airportNotFoundException(AirportNotFoundException ex) {
 		return new ResponseEntity<>(message6,HttpStatus.CONFLICT);
 	}
 }

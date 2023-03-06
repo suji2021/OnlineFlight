@@ -1,4 +1,4 @@
-package com.flightbooking.dao;
+package com.flightbooking.serviceimpl;
 
 import java.util.List;
 
@@ -9,9 +9,10 @@ import com.flightbooking.exception.BookingAlreadyExistsException;
 import com.flightbooking.exception.BookingNotFoundException;
 import com.flightbooking.model.Booking;
 import com.flightbooking.repository.BookingRepository;
+import com.flightbooking.service.BookingService;
 
 @Service
-public class BookingDaoImpl implements BookingDao {
+public class BookingServiceImpl implements BookingService {
 	
 	@Autowired
 	private BookingRepository repository;
@@ -31,12 +32,14 @@ public class BookingDaoImpl implements BookingDao {
 
 	
 	public void cancelBooking(long bookingId) throws BookingNotFoundException {
-		Booking book=repository.getOne( bookingId);
-		if(book==null) {
-			throw new BookingNotFoundException();
+		
+		if(repository.existsById(bookingId)) {
+			Booking book=repository.getOne( bookingId);
+			repository.delete(book);
+			
 		}
 		else
-			repository.delete(book);
+			throw new BookingNotFoundException();
 		
 	}
 

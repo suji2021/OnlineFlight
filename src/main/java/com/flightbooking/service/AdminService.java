@@ -1,9 +1,9 @@
-package com.flightbooking.dao;
+package com.flightbooking.service;
 
 import com.flightbooking.exception.InvalidAdminException;
 import com.flightbooking.model.Admin;
 
-public interface AdminDao {
+public interface AdminService {
 	
 	public Admin registerAdmin(Admin admin);
 	

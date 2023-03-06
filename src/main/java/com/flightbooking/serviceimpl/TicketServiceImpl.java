@@ -1,4 +1,4 @@
-package com.flightbooking.dao;
+package com.flightbooking.serviceimpl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.flightbooking.model.Ticket;
 import com.flightbooking.repository.TicketRepository;
+import com.flightbooking.service.TicketService;
 
 @Service
-public class TicketDaoImpl implements TicketDao {
+public class TicketServiceImpl implements TicketService {
 	
 	@Autowired
 	private TicketRepository repository;

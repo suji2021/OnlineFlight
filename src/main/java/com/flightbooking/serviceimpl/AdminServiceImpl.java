@@ -1,4 +1,4 @@
-package com.flightbooking.dao;
+package com.flightbooking.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 import com.flightbooking.exception.InvalidAdminException;
 import com.flightbooking.model.Admin;
 import com.flightbooking.repository.AdminRepository;
+import com.flightbooking.service.AdminService;
 
 @Service
-public class AdminDaoImpl implements AdminDao {
+public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private AdminRepository repoAdmin;

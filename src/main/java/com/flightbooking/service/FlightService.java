@@ -1,11 +1,11 @@
-package com.flightbooking.dao;
+package com.flightbooking.service;
 
 import java.util.List;
 
 import com.flightbooking.exception.FlightNotFoundException;
 import com.flightbooking.model.Flight;
 
-public interface FlightDao {
+public interface FlightService {
 	public Flight addFlight(Flight flight);
 	public Flight updateFlight(Flight flight, long flightId)throws FlightNotFoundException;
 	public List<Flight> getAllFlights();

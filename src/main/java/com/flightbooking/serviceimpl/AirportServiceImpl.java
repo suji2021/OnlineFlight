@@ -1,4 +1,4 @@
-package com.flightbooking.dao;
+package com.flightbooking.serviceimpl;
 
 import java.util.List;
 
@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import com.flightbooking.exception.AirportNotFoundException;
 import com.flightbooking.model.Airport;
 import com.flightbooking.repository.AirportRepository;
+import com.flightbooking.service.AirportService;
 
 @Service
-public class AirportDaoImpl implements AirportDao{
+public class AirportServiceImpl implements AirportService{
 
 	@Autowired
 	private AirportRepository repository;
@@ -27,13 +28,15 @@ public class AirportDaoImpl implements AirportDao{
 
 	
 	public Airport updateAirport(Airport airport, long airportId) throws AirportNotFoundException {
-		Airport a =repository.findById(airportId).get();
-		if(a==null) {
-			throw new AirportNotFoundException();
+		
+		if(repository.existsById(airportId)) {
+			Airport a =repository.findById(airportId).get();
+			a.setAirportName(airport.getAirportName());
+			a.setCity(airport.getCity());
+			return this.repository.save(a);
+			
 		}		
-		a.setAirportName(airport.getAirportName());
-		a.setCity(airport.getCity());
-		return this.repository.save(a);
+		throw new AirportNotFoundException();
 	}
 	
 }

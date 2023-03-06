@@ -2,14 +2,20 @@ package com.flightbooking.exception;
 
 
 public class BookingNotFoundException  extends Exception {
-	private String message4;
-	public BookingNotFoundException() {}
-	public BookingNotFoundException(String message4) {
-		this.message4=message4;
-	}
-	public String getMessage4() {
-		return this.message4;
-	}
 	
+	 private final String message;
+	    
+	    public BookingNotFoundException() {
+	        this.message = null;
+	    }
+	    
+	    public BookingNotFoundException(String message) {
+	        this.message = message;
+	    }
+	    
+	    @Override
+	    public String getMessage() {
+	        return this.message;
+	    }
 
 }

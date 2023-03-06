@@ -1,11 +1,11 @@
-package com.flightbooking.dao;
+package com.flightbooking.service;
 
 import java.util.List;
 
 import com.flightbooking.exception.UserNotFoundException;
 import com.flightbooking.model.User;
 
-public interface UserDao {
+public interface UserService {
 	
 	//methods performed for the user model
 	

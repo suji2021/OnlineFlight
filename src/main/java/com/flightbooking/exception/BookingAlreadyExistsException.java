@@ -2,14 +2,18 @@ package com.flightbooking.exception;
 
 @SuppressWarnings("serial")
 public class BookingAlreadyExistsException extends Exception {
-	private String message1;
-	public BookingAlreadyExistsException() {}
-	public BookingAlreadyExistsException(String message1) {
-		this.message1=message1;
-	}
-	public String getMessage1() {
-		return this.message1;
-	}
-	
-
+	 private final String message;
+	    
+	    public BookingAlreadyExistsException() {
+	        this.message = null;
+	    }
+	    
+	    public BookingAlreadyExistsException(String message) {
+	        this.message = message;
+	    }
+	    
+	    @Override
+	    public String getMessage() {
+	        return this.message;
+	    }
 }

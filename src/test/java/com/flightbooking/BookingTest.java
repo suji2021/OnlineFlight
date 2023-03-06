@@ -9,14 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import com.flightbooking.dao.BookingDao;
 import com.flightbooking.exception.BookingAlreadyExistsException;
 import com.flightbooking.exception.BookingNotFoundException;
 import com.flightbooking.model.Booking;
+import com.flightbooking.service.BookingService;
 @RunWith(MockitoJUnitRunner.class)
 public class BookingTest {
 	@Mock
-	private BookingDao bookingDao;
+	private BookingService bookingService;
 	private Booking booking;
 	@Before
 	public void setup() {
@@ -28,8 +28,8 @@ public class BookingTest {
 	public void testGetAllBookings() {
 	List<Booking> expectedBookings = new ArrayList<>();
 	expectedBookings.add(booking);
-	 when(bookingDao.getAllBookings()).thenReturn(expectedBookings);
-	List<Booking> actualBookings = bookingDao.getAllBookings();
+	 when(bookingService.getAllBookings()).thenReturn(expectedBookings);
+	List<Booking> actualBookings = bookingService.getAllBookings();
 	assertNotNull(actualBookings);
 	assertEquals(expectedBookings.size(), actualBookings.size());
 	 assertEquals(expectedBookings.get(0), actualBookings.get(0));
@@ -37,21 +37,21 @@ public class BookingTest {
 	
 	@Test
 	public void testNewBooking() throws BookingAlreadyExistsException {
-	 when(bookingDao.newBooking(booking)).thenReturn(booking);
-	Booking actualBooking = bookingDao.newBooking(booking);
+	 when(bookingService.newBooking(booking)).thenReturn(booking);
+	Booking actualBooking = bookingService.newBooking(booking);
 	assertNotNull(actualBooking);
 	assertEquals(booking, actualBooking);
 	}
 	
 	@Test
 	public void testCancelBooking() throws BookingNotFoundException {
-	bookingDao.cancelBooking(booking.getBookingId());
+	bookingService.cancelBooking(booking.getBookingId());
 	}
 	
 	@Test
 	public void testFindByBookingId() throws BookingNotFoundException {
-		when(bookingDao.findByBookingId(booking.getBookingId())).thenReturn(booking);
-		Booking actualBooking = bookingDao.findByBookingId(booking.getBookingId());
+		when(bookingService.findByBookingId(booking.getBookingId())).thenReturn(booking);
+		Booking actualBooking = bookingService.findByBookingId(booking.getBookingId());
 		assertNotNull(actualBooking);
 		assertEquals(booking, actualBooking);
 		}	

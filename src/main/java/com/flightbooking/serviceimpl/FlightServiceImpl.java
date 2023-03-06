@@ -1,4 +1,4 @@
-package com.flightbooking.dao;
+package com.flightbooking.serviceimpl;
 
 import java.util.List;
 
@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import com.flightbooking.exception.FlightNotFoundException;
 import com.flightbooking.model.Flight;
 import com.flightbooking.repository.FlightRepository;
+import com.flightbooking.service.FlightService;
 
 @Service
-public class FlightDaoImpl implements FlightDao {
+public class FlightServiceImpl implements FlightService {
 	
 	@Autowired
 	private FlightRepository repository;
@@ -22,15 +23,15 @@ public class FlightDaoImpl implements FlightDao {
 
 	
 	public Flight updateFlight(Flight flight, long flightId ) throws FlightNotFoundException {
-		Flight u =repository.findById(flightId).get();
-		if(u==null) {
-			throw new FlightNotFoundException();
-		}		
 		
-		u.setDepartureDate(flight.getDepartureDate());
-		u.setArrivalDate(flight.getArrivalDate());
-		u.setAvailableSeats(flight.getAvailableSeats());
-		return this.repository.save(u);
+		if(repository.existsById(flightId)) {
+			Flight u =repository.findById(flightId).get();
+			u.setDepartureDate(flight.getDepartureDate());
+			u.setArrivalDate(flight.getArrivalDate());
+			u.setAvailableSeats(flight.getAvailableSeats());	
+			return this.repository.save(u);
+		}		
+		throw new FlightNotFoundException();	
 	}
 
 	public List<Flight> getAllFlights() {

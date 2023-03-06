@@ -1,10 +1,10 @@
-package com.flightbooking.dao;
+package com.flightbooking.service;
 
 import java.util.List;
 
 import com.flightbooking.model.Ticket;
 
-public interface TicketDao {
+public interface TicketService {
 	
 	public Ticket addTicket(Ticket ticket);
 	public List<Ticket> findAllTickets();

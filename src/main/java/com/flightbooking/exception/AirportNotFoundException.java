@@ -1,13 +1,19 @@
 package com.flightbooking.exception;
 
 public class AirportNotFoundException extends Exception {
-	private String message6;
-	public AirportNotFoundException() {}
-	public AirportNotFoundException(String message6) {
-		this.message6=message6;
-	}
-	public String getMessage6() {
-		return this.message6;
-	}
+	  private final String message;
+	    
+	    public AirportNotFoundException() {
+	        this.message = null;
+	    }
+	    
+	    public AirportNotFoundException(String message) {
+	        this.message = message;
+	    }
+	    
+	    @Override
+	    public String getMessage() {
+	        return this.message;
+	    }
 
 }

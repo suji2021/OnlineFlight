@@ -1,4 +1,4 @@
-package com.flightbooking.dao;
+package com.flightbooking.serviceimpl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 import com.flightbooking.exception.UserNotFoundException;
 import com.flightbooking.model.User;
 import com.flightbooking.repository.UserRepository;
+import com.flightbooking.service.UserService;
 
 @Service
-public class UserDaoImpl implements UserDao {
+public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository repository;
@@ -26,12 +27,14 @@ public class UserDaoImpl implements UserDao {
 
 	//deleting the user account, if account does not exists throws exception
 	public void deleteUser(long userId) throws UserNotFoundException{
-		User usr= repository.getOne(userId);
-		if(usr==null) {
-			throw new UserNotFoundException();
+		
+		if(repository.existsById(userId)) {
+			User usr= repository.getOne(userId);
+			repository.delete(usr);
+			
 		}
 		else {
-			repository.delete(usr);
+			throw new UserNotFoundException();
 		}
 	}
 
@@ -59,13 +62,15 @@ public class UserDaoImpl implements UserDao {
 
 	//updating the mobile number and the address of the user.
 	public User updateUser(User user, long userId) throws UserNotFoundException {
-		User u =repository.findById(userId).get();
-		if(u==null) {
-			throw new UserNotFoundException();
+		
+		if(repository.findById(userId).get()==null) {
+			User u =repository.findById(userId).get();
+			u.setAddress(user.getAddress());
+			u.setMobile(user.getMobile());
+			return this.repository.save(u);
+			
 		}		
-		u.setAddress(user.getAddress());
-		u.setMobile(user.getMobile());
-		return this.repository.save(u);
+		throw new UserNotFoundException();
 	}
 
 	
