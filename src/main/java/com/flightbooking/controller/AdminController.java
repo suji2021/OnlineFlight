@@ -63,7 +63,10 @@ public class AdminController {
 	@PostMapping("/loginAdmin") String loginAdmin(@RequestBody Admin admin) throws InvalidAdminException{
 		return this.adminService.loginAdmin(admin);
 	}
-
+@PutMapping("/updateAdmin/{adminId}")
+public Admin updateAdmin(@RequestBody Admin admin,@PathVariable long adminId)throws InvalidAdminException{
+	return this.adminService.updateAdmin(admin, adminId);
+}
 	//Airport
 	
 	@PostMapping("/addAirports")

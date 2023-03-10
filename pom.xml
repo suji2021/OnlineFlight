@@ -67,7 +67,7 @@
 	</activation>
 	<properties>
 	<sonar.host.url>http://localhost:9000</sonar.host.url>
-	<sonar.login> 9a109377dced70efd49c8d12c4c3a606157313b3</sonar.login>
+	<sonar.login>7032dbeff11d70ad556b70d6bb74888b6ba07dd7</sonar.login>
 	</properties>
 	</profile> 
 	</profiles>

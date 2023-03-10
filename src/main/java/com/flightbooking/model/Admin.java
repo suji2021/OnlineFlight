@@ -21,18 +21,18 @@ public class Admin {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="admin_id")
-	public long adminId;
+	private long adminId;
 	
 	@Column(name="first_name")
-	public String firstName;
+	private String firstName;
 	
 	@Column(name="last_name")
-	public String lastName;
+	private String lastName;
 	
 	@Column(name="email_Id")
-	public String emailId;
+	private String emailId;
 	
 	@Column(name="password")
-	public String password;
+	private String password;
 	
 }
