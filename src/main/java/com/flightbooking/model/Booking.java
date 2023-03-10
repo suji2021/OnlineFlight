@@ -33,7 +33,7 @@ public class Booking {
 	@Column(name="booking_Id")
 	private long bookingId;
 	
-	@Column(name="passenger_name", nullable=false)
+	@Column(name="passenger_name")
 	private String passengerName ;
 	
 	@Column(name="number_of_seats")

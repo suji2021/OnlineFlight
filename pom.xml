@@ -25,6 +25,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+		<groupId>org.sonarsource.scanner.maven</groupId>
+		<artifactId>sonar-maven-plugin</artifactId>
+		<version>3.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -53,6 +58,19 @@
     <version>2.9.2</version>
 </dependency>
 	</dependencies>
+	
+	<profiles>
+	<profile>
+	<id>sonar</id>
+	<activation>
+	<activeByDefault>true</activeByDefault>
+	</activation>
+	<properties>
+	<sonar.host.url>http://localhost:9000</sonar.host.url>
+	<sonar.login> 9a109377dced70efd49c8d12c4c3a606157313b3</sonar.login>
+	</properties>
+	</profile> 
+	</profiles>
 
 	<build>
 		<plugins>

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.flightbooking.controller.AdminController;
 import com.flightbooking.controller.UserController;
+import com.flightbooking.exception.DuplicateUserException;
 import com.flightbooking.exception.UserNotFoundException;
 import com.flightbooking.model.User;
 import com.flightbooking.serviceimpl.UserServiceImpl;
@@ -41,8 +42,7 @@ public class UsersControllerTest {
     @Test
     public void testGetAllUsers() {
         List<User> userList = new ArrayList<>();
-        userList.add(new User(1L, "Abi", "Ramesh", "abi@example.com", "password",
-                null, null, null, 0, null));
+        userList.add(new User(1L, "Abi", "Ramesh", "abiramiramesh@example.com", "password", null, null, null, 0, null));
         userList.add(new User(2L, "Arun", "Ramesh", "arunramesh@example.com", "password", null, null, null, 0, null));
         when(userService.getAllUsers()).thenReturn(userList);
 
@@ -60,7 +60,7 @@ public class UsersControllerTest {
     }
 
     @Test
-    public void testRegisterUser() {
+    public void testRegisterUser() throws DuplicateUserException {
         User user = new User(0, "Abi", "Ramesh", "abiramesh@example.com", "password", null, null, null, 0, null);
         when(userService.registerUser(user)).thenReturn(user);
 
@@ -71,8 +71,7 @@ public class UsersControllerTest {
 
     @Test
     public void testUpdateUser() throws UserNotFoundException {
-        User user = new User(0, "Abi", "Ramesh", "abiramesh@example.com", "password",
-                null, null, null, 0, null);
+        User user = new User(0, "Abi", "Ramesh",  "abiramesh@example.com", "password",  null, null, null, 0, null);
         User updatedUser = new User(1L, "Abi", "Ramesh", "abiramesh@example.com", "newpassword", null, null, null, 0, null);
         when(userService.updateUser(user, 0)).thenReturn(updatedUser);
 

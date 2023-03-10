@@ -1,6 +1,7 @@
 package com.flightbooking.serviceimpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,9 @@ public class AirportServiceImpl implements AirportService{
 
 	
 	public Airport updateAirport(Airport airport, long airportId) throws AirportNotFoundException {
-		
-		if(repository.existsById(airportId)) {
-			Airport a =repository.findById(airportId).get();
+		Optional<Airport> airports=repository.findById(airportId);
+		if(airports.isPresent()) {
+			Airport a =repository.getOne(airportId);
 			a.setAirportName(airport.getAirportName());
 			a.setCity(airport.getCity());
 			return this.repository.save(a);

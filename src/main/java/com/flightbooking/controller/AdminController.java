@@ -135,9 +135,9 @@ public class AdminController {
 		}
 		
 		@DeleteMapping("/cancelTicket/{ticketId}")
-		public ResponseEntity<String> cancelTicket(@PathVariable int ticketId) {
-			this.ticketService.getTicketById(ticketId);
-			this.ticketService.cancelTicket(ticketId);
+		public ResponseEntity<String> cancelTicket(@PathVariable int ticket) {
+			this.ticketService.getTicketById(ticket);
+			this.ticketService.cancelTicket(ticket);
 			return new ResponseEntity<>("Cancelled Successfully",HttpStatus.OK);
 		}
 		

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flightbooking.exception.BookingAlreadyExistsException;
 import com.flightbooking.exception.BookingNotFoundException;
+import com.flightbooking.exception.DuplicateUserException;
 import com.flightbooking.exception.FlightNotFoundException;
 import com.flightbooking.exception.UserNotFoundException;
 import com.flightbooking.model.Booking;
@@ -48,7 +48,7 @@ public class UserController {
 	
 	// Post mapping request for registering the user and his/her details
 	@PostMapping("/registerUser")
-	public ResponseEntity<User> registerUser(@RequestBody User user) {
+	public ResponseEntity<User> registerUser(@RequestBody User user) throws DuplicateUserException {
 		User usr= this.userService.registerUser(user);
 		return new ResponseEntity<>(usr, HttpStatus.CREATED);
 	}
@@ -84,7 +84,7 @@ public class UserController {
 	//booking
 	
 	@PostMapping("/newBooking")
-	public ResponseEntity<Booking>  newBooking(@RequestBody Booking booking) throws BookingAlreadyExistsException {
+	public ResponseEntity<Booking>  newBooking(@RequestBody Booking booking){
 		Booking book=this.bookingService.newBooking(booking);
 		return new ResponseEntity<>(book,HttpStatus.CREATED);
 		

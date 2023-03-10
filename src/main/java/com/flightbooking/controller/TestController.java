@@ -31,15 +31,15 @@ package com.flightbooking.controller;
 			logger.warn("This is a warning message");
 			logger.error("This is an error message");
 			logger.info(message);
-			return "Just for testing";
+			return "Welcome To FlightBooking";
 			
 		}
 		
-		@RequestMapping("/login")
-		public void authentication() {
-			String name = env.getProperty("username");
-			logger.info("Welcome " +name +" " +message2);
-		}
+//		@RequestMapping("/login")
+//		public void authentication() {
+//			String name = env.getProperty("username");
+//			logger.info("Welcome " +name +" " +message2);
+//		}
 
 	}
 

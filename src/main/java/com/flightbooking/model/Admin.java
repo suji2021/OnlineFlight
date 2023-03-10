@@ -23,8 +23,11 @@ public class Admin {
 	@Column(name="admin_id")
 	public long adminId;
 	
-	@Column(name="user_name")
-	public String userName;
+	@Column(name="first_name")
+	public String firstName;
+	
+	@Column(name="last_name")
+	public String lastName;
 	
 	@Column(name="email_Id")
 	public String emailId;

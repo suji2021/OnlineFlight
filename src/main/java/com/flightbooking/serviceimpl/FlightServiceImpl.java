@@ -1,6 +1,7 @@
 package com.flightbooking.serviceimpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,9 @@ public class FlightServiceImpl implements FlightService {
 
 	
 	public Flight updateFlight(Flight flight, long flightId ) throws FlightNotFoundException {
-		
-		if(repository.existsById(flightId)) {
-			Flight u =repository.findById(flightId).get();
+		Optional<Flight> flights= repository.findById(flightId);
+		if(flights.isPresent()) {
+			Flight u =repository.getOne(flightId);
 			u.setDepartureDate(flight.getDepartureDate());
 			u.setArrivalDate(flight.getArrivalDate());
 			u.setAvailableSeats(flight.getAvailableSeats());	
@@ -45,7 +46,7 @@ public class FlightServiceImpl implements FlightService {
 			throw new FlightNotFoundException();
 		}
 		else {
-			flt=repository.findById(flightId).get();
+			flt=repository.getOne(flightId);
 		}
 		return flt;
 	}

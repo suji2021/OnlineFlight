@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.flightbooking.exception.BookingAlreadyExistsException;
 import com.flightbooking.exception.BookingNotFoundException;
 import com.flightbooking.model.Booking;
+import com.flightbooking.model.Flight;
 import com.flightbooking.repository.BookingRepository;
+import com.flightbooking.repository.FlightRepository;
 import com.flightbooking.service.BookingService;
 
 @Service
@@ -17,18 +18,23 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	private BookingRepository repository;
 	
+	@Autowired
+	private FlightRepository flightRepository;
+	
 	
 	public List<Booking> getAllBookings() {
 		return repository.findAll();
 	}
 
 	
-	public Booking newBooking(Booking booking) throws BookingAlreadyExistsException {
-		if(repository.existsById(booking.getBookingId())) {
-			throw new BookingAlreadyExistsException();
+	public Booking newBooking(Booking booking) {
+			long flightId= booking.getFlight().getFlightId();
+			Flight flight = flightRepository.getOne(flightId);
+			int availableSeats = flight.getAvailableSeats() ;
+			availableSeats -= booking.getNumberOfSeats();
+			flight.setAvailableSeats(availableSeats);
+			return repository.save(booking);
 		}
-		return repository.save(booking);
-	}
 
 	
 	public void cancelBooking(long bookingId) throws BookingNotFoundException {
@@ -49,7 +55,7 @@ public class BookingServiceImpl implements BookingService {
 			throw new BookingNotFoundException();
 		}
 		else {
-			book= repository.findById(bookingId).get();
+			book= repository.getOne(bookingId);
 		}
 		return book;
 	}

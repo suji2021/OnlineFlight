@@ -1,9 +1,12 @@
 package com.flightbooking.serviceimpl;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.flightbooking.exception.DuplicateUserException;
 import com.flightbooking.exception.UserNotFoundException;
 import com.flightbooking.model.User;
 import com.flightbooking.repository.UserRepository;
@@ -20,17 +23,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	//registering the user details 
-	public User registerUser(User user) {		
-		return repository.save(user);
+	public User registerUser(User user) throws DuplicateUserException {
+	    User existingUser = repository.findByUserNameOrEmailId(user.getUserName(), user.getEmailId());
+	    if (existingUser != null) {
+	        throw new DuplicateUserException();
+	    } else {
+	        return repository.save(user);
+	    }
 	}
 
+
+	
+
+	
 
 	//deleting the user account, if account does not exists throws exception
 	public void deleteUser(long userId) throws UserNotFoundException{
 		
 		if(repository.existsById(userId)) {
-			User usr= repository.getOne(userId);
-			repository.delete(usr);
+			User user= repository.getOne(userId);
+			repository.delete(user);
 			
 		}
 		else {
@@ -40,14 +52,14 @@ public class UserServiceImpl implements UserService {
 
 	//getting the details of user by id, if it's not there throws exception
 	public User getUserById(long userId) throws UserNotFoundException {
-		User usr;
+		User user;
 		if(repository.findById(userId).isEmpty()) {
 			throw new UserNotFoundException();
 		}
 		else {
-			usr=repository.findById(userId).get();
+			user=repository.getOne(userId);
 		}
-		return usr;
+		return user;
 	}
 
 
@@ -62,9 +74,9 @@ public class UserServiceImpl implements UserService {
 
 	//updating the mobile number and the address of the user.
 	public User updateUser(User user, long userId) throws UserNotFoundException {
-		
-		if(repository.findById(userId).get()==null) {
-			User u =repository.findById(userId).get();
+		Optional<User> usr= repository.findById(userId);
+		if(usr.isPresent()) {
+			User u =repository.getOne(userId);
 			u.setAddress(user.getAddress());
 			u.setMobile(user.getMobile());
 			return this.repository.save(u);

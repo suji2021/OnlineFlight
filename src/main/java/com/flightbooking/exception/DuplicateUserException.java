@@ -1,14 +1,13 @@
 package com.flightbooking.exception;
 
-@SuppressWarnings("serial")
-public class BookingAlreadyExistsException extends Exception {
+public class DuplicateUserException extends Exception {
 	 private final String message;
 	    
-	    public BookingAlreadyExistsException() {
+	    public DuplicateUserException() {
 	        this.message = null;
 	    }
 	    
-	    public BookingAlreadyExistsException(String message) {
+	    public DuplicateUserException(String message) {
 	        this.message = message;
 	    }
 	    
@@ -16,4 +15,5 @@ public class BookingAlreadyExistsException extends Exception {
 	    public String getMessage() {
 	        return this.message;
 	    }
+	   
 }
